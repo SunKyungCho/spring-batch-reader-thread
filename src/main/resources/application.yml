@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    username: root
+    password: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.64.3:3306/test_db
+  batch:
+    job:
+      enabled: false
+
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        jdbc.lob.non_contextual_creation: true
+    show-sql: true
