@@ -14,24 +14,25 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBatchTest
-@SpringBootTest(classes = {MultiJdbcCursorReaderJob.class})
+@SpringBootTest(classes = {PartitioningJdbcPagingReaderJob.class})
 @EnableAutoConfiguration
 @EnableBatchProcessing
-class MultiJdbcCursorReaderJobTest {
+class PartitioningJdbcPagingReaderJobTest {
 
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
 
     @Test
-    void single_process_jdbc_paging_reader_test() throws Exception {
+    void partitioner_jdbc_paging_reader_test() throws Exception {
 
         JobExecution jobExecution = jobLauncherTestUtils.launchJob();
         ExitStatus exitStatus = jobExecution.getExitStatus();
 
         long time = jobExecution.getEndTime().getTime() - jobExecution.getStartTime().getTime();
-        System.out.println(">>>>>>>> " + time +"ms");
+        System.out.println(">>>>>>>> " + time + "ms");
 
         assertThat(exitStatus).isEqualTo(ExitStatus.COMPLETED);
     }
+
 
 }

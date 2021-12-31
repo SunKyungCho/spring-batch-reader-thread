@@ -28,24 +28,23 @@ public class MultiJdbcCursorReaderJob {
     private final DataSource dataSource;
 
     @Bean
-    public Job singleProcessJdbcPagingReaderJob() {
-        return jobBuilderFactory.get("singleProcessJdbcPagingReaderJob")
-                                .start(singleProcessJdbcPagingReaderStep())
+    public Job multiProcessJdbcPagingReaderJob() {
+        return jobBuilderFactory.get("multiProcessJdbcPagingReaderJob")
+                                .start(multiProcessJdbcPagingReaderStep())
                                 .build();
     }
 
     @Bean
-    public Step singleProcessJdbcPagingReaderStep() {
-        return stepBuilderFactory.get("singleProcessJdbcPagingReaderStep")
+    public Step multiProcessJdbcPagingReaderStep() {
+        return stepBuilderFactory.get("multiProcessJdbcPagingReaderStep")
                                  .<Product, Product>chunk(CHUNK_SIZE)
-                                 .reader(reader())
+                                 .reader(multiJdbcCursorReader())
                                  .writer(new PrintWriter())
                                  .taskExecutor(taskExecutor())
                                  .build();
     }
 
-    @Bean
-    public TaskExecutor taskExecutor() {
+    private TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(5);
         executor.setMaxPoolSize(5);
@@ -56,7 +55,7 @@ public class MultiJdbcCursorReaderJob {
     }
 
     @Bean
-    public JdbcCursorItemReader<Product> reader() {
+    public JdbcCursorItemReader<Product> multiJdbcCursorReader() {
         return new JdbcCursorItemReaderBuilder<Product>()
             .dataSource(dataSource)
             .fetchSize(CHUNK_SIZE)

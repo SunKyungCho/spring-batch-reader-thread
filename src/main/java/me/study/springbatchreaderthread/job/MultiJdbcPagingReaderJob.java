@@ -27,7 +27,7 @@ import me.study.springbatchreaderthread.job.step.CustomJdbcPagingItemReaderBuild
 @RequiredArgsConstructor
 public class MultiJdbcPagingReaderJob {
 
-    private static final int CHUNK_SIZE = 1000;
+    private static final int CHUNK_SIZE = 10;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
@@ -43,15 +43,14 @@ public class MultiJdbcPagingReaderJob {
     public Step multiThreadJdbcPagingReaderStep() {
         return stepBuilderFactory.get("multiThreadJdbcPagingReaderStep")
                                  .<Product, Product>chunk(CHUNK_SIZE)
-                                 .reader(reader())
+                                 .reader(multiJdbcPagingReader())
                                  .writer(new PrintWriter())
                                  .taskExecutor(taskExecutor())
                                  .throttleLimit(10)
                                  .build();
     }
 
-    @Bean
-    public TaskExecutor taskExecutor() {
+    private TaskExecutor taskExecutor() {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(10);
@@ -61,23 +60,9 @@ public class MultiJdbcPagingReaderJob {
         return executor;
     }
 
-
-//    @Bean
-//    public CustomJdbcPagingItemReader<Product> reader() {
-//        return new CustomJdbcPagingItemReaderBuilder<Product>()
-//            .dataSource(dataSource)
-//            .selectClause("*")
-//            .fromClause("product")
-//            .sortKeys(Map.of("product_no", Order.ASCENDING))
-//            .rowMapper(new BeanPropertyRowMapper<>(Product.class))
-//            .pageSize(CHUNK_SIZE)
-//            .saveState(false)
-//            .build();
-//    }
-
     @Bean
-    public JdbcPagingItemReader<Product> reader() {
-        return new JdbcPagingItemReaderBuilder<Product>()
+    public CustomJdbcPagingItemReader<Product> multiJdbcPagingReader() {
+        return new CustomJdbcPagingItemReaderBuilder<Product>()
             .dataSource(dataSource)
             .selectClause("*")
             .fromClause("product")

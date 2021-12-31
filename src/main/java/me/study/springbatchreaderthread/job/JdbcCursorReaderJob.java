@@ -36,13 +36,13 @@ public class JdbcCursorReaderJob {
     public Step singleProcessJdbcCursorReaderStep() {
         return stepBuilderFactory.get("singleProcessJdbcCursorReaderStep")
                                  .<Product, Product>chunk(CHUNK_SIZE)
-                                 .reader(reader())
+                                 .reader(jdbcCursorReader())
                                  .writer(new PrintWriter())
                                  .build();
     }
 
     @Bean
-    public JdbcCursorItemReader<Product> reader() {
+    public JdbcCursorItemReader<Product> jdbcCursorReader() {
         return new JdbcCursorItemReaderBuilder<Product>()
             .dataSource(dataSource)
             .fetchSize(CHUNK_SIZE)

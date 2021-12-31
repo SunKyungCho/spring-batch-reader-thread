@@ -25,7 +25,7 @@ import me.study.springbatchreaderthread.job.step.CustomJdbcPagingItemReaderBuild
 @RequiredArgsConstructor
 public class SimpleJdbcPagingReaderJob {
 
-    private static final int CHUNK_SIZE = 1000;
+    private static final int CHUNK_SIZE = 10;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
@@ -41,7 +41,7 @@ public class SimpleJdbcPagingReaderJob {
     public Step singleProcessJdbcPagingReaderStep() {
         return stepBuilderFactory.get("singleProcessJdbcPagingReaderStep")
                                  .<Product, Product>chunk(CHUNK_SIZE)
-                                 .reader(reader())
+                                 .reader(simpleJdbcPagingReader())
                                  .writer(new PrintWriter())
                                  .build();
     }
@@ -60,8 +60,8 @@ public class SimpleJdbcPagingReaderJob {
 //    }
 
     @Bean
-    public JdbcPagingItemReader<Product> reader() {
-        return new JdbcPagingItemReaderBuilder<Product>()
+    public CustomJdbcPagingItemReader<Product> simpleJdbcPagingReader() {
+        return new CustomJdbcPagingItemReaderBuilder<Product>()
             .dataSource(dataSource)
             .selectClause("*")
             .fromClause("product")

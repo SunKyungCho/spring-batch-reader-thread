@@ -25,7 +25,7 @@ class TestDataSetup {
     @Rollback(value = false)
     void test() {
         Random random = new Random();
-        IntStream.range(0, 1000)
+        IntStream.range(0, 5000)
                  .mapToObj(x -> new Product(key(), random.nextInt(), key(), key(), key()))
                  .forEach(product -> productRepository.save(product));
     }
