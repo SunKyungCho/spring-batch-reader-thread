@@ -171,7 +171,7 @@ public class CustomJdbcPagingItemReader<T> extends AbstractPagingItemReader<T> i
     @SneakyThrows
 	@Override
     protected void doReadPage() {
-//    	Thread.sleep(1000);
+    	Thread.sleep(1000);
         if (results == null) {
             results = new CopyOnWriteArrayList<>();
         } else {

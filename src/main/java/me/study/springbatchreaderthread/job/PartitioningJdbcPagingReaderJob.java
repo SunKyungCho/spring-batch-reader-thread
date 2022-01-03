@@ -29,7 +29,7 @@ import me.study.springbatchreaderthread.job.step.CustomJdbcPagingItemReaderBuild
 @RequiredArgsConstructor
 public class PartitioningJdbcPagingReaderJob {
 
-    private static final int CHUNK_SIZE = 10;
+    private static final int CHUNK_SIZE = 500;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
