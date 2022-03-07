@@ -27,7 +27,7 @@ import me.study.springbatchreaderthread.job.step.CustomJdbcPagingItemReaderBuild
 @RequiredArgsConstructor
 public class MultiJdbcPagingReaderJob {
 
-    private static final int CHUNK_SIZE = 500;
+    private static final int CHUNK_SIZE = 1000;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
@@ -54,7 +54,6 @@ public class MultiJdbcPagingReaderJob {
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(10);
         executor.setMaxPoolSize(10);
-        executor.setQueueCapacity(100);
         executor.setThreadNamePrefix("async-");
         executor.initialize();
         return executor;

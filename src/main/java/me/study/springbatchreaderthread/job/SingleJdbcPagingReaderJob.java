@@ -9,9 +9,7 @@ import org.springframework.batch.core.Job;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
 import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
-import org.springframework.batch.item.database.JdbcPagingItemReader;
 import org.springframework.batch.item.database.Order;
-import org.springframework.batch.item.database.builder.JdbcPagingItemReaderBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -23,9 +21,9 @@ import me.study.springbatchreaderthread.job.step.CustomJdbcPagingItemReaderBuild
 
 @Configuration
 @RequiredArgsConstructor
-public class SimpleJdbcPagingReaderJob {
+public class SingleJdbcPagingReaderJob {
 
-    private static final int CHUNK_SIZE = 500;
+    private static final int CHUNK_SIZE = 1000;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;

@@ -20,7 +20,7 @@ import me.study.springbatchreaderthread.entity.Product;
 @RequiredArgsConstructor
 public class JdbcCursorReaderJob {
 
-    private static final int CHUNK_SIZE = 500;
+    private static final int CHUNK_SIZE = 1000;
     private final JobBuilderFactory jobBuilderFactory;
     private final StepBuilderFactory stepBuilderFactory;
     private final DataSource dataSource;
@@ -51,5 +51,4 @@ public class JdbcCursorReaderJob {
             .name("jdbcCursorItemReader")
             .build();
     }
-
 }

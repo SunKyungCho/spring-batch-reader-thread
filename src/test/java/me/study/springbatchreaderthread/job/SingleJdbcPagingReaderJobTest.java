@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.batch.core.ExitStatus;
-import org.springframework.batch.core.Job;
 import org.springframework.batch.core.JobExecution;
 import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
 import org.springframework.batch.test.JobLauncherTestUtils;
@@ -15,10 +14,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 @SpringBatchTest
-@SpringBootTest(classes = {SimpleJdbcPagingReaderJob.class})
+@SpringBootTest(classes = {SingleJdbcPagingReaderJob.class})
 @EnableAutoConfiguration
 @EnableBatchProcessing
-class SimpleJdbcPagingReaderJobTest {
+class SingleJdbcPagingReaderJobTest {
 
     @Autowired
     private JobLauncherTestUtils jobLauncherTestUtils;
